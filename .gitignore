@@ -32,11 +32,39 @@ ipch/
 *.VC.db
 *.VC.VC.opendb
 *.[Cc]ache
+CMakePresets.json
+CMakeUserPresets.json
 # Visual Studio Code
 .vscode/
 # Vim
 .vim/
 *.swp
+
+# Qt unit tests
+target_wrapper.*
+
+# QtCreator
+*.autosave
+
+# QtCreator Qml
+*.qmlproject.user
+*.qmlproject.user.*
+
+# QtCreator CMake
+CMakeLists.txt.user*
+
+# QtCreator 4.8< compilation database
+compile_commands.json
+
+# QtCreator local machine specific files for imported projects
+*creator.user*
+
+*_qmlcache.qrc
+
+# CLion
+/.idea
+*.clang-format
+/install
 
 # For Doxygen ------------------------------------
 docs/build/
