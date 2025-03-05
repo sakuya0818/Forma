@@ -49,114 +49,117 @@ bool GetNameInfo(struct sockaddr* aAddr, int aFamily, std::string& aName)
 // private
 GenNetInfo::GenNetInfo()
 {
-    int numInterfaces = 0;
+	int numInterfaces = 0;
 
 #if defined(_WIN32)
-    SOCKET sd = WSASocketW(AF_INET, SOCK_DGRAM, 0, 0, 0, 0);
+    #if defined(__MINGW32__) || defined(__MINGW64__)
+    #else
+	    SOCKET sd = WSASocketW(AF_INET, SOCK_DGRAM, 0, 0, 0, 0);
 
-    if (sd == SOCKET_ERROR)
-    {
-        std::cout << "Winsock: " << WSAGetLastError() << std::endl;
-        return;
-    }
+	    if (sd == SOCKET_ERROR)
+	    {
+		    std::cout << "Winsock: " << WSAGetLastError() << std::endl;
+		    return;
+	    }
 
-    INTERFACE_INFO InterfaceList[20];
-    unsigned long nBytesReturned;
-    int result = WSAIoctl(sd, SIO_GET_INTERFACE_LIST, 0, 0, &InterfaceList, sizeof(InterfaceList), &nBytesReturned, 0, 0);
-    if (result == SOCKET_ERROR)
-    {
-        std::cout << "Winsock: " << WSAGetLastError() << std::endl;
-        return;
-    }
+	    INTERFACE_INFO InterfaceList[20];
+	    unsigned long nBytesReturned;
+	    int result = WSAIoctl(sd, SIO_GET_INTERFACE_LIST, 0, 0, &InterfaceList, sizeof(InterfaceList), &nBytesReturned, 0, 0);
+	    if (result == SOCKET_ERROR)
+	    {
+		    std::cout << "Winsock: " << WSAGetLastError() << std::endl;
+		    return;
+	    }
 
-    numInterfaces = nBytesReturned / sizeof(INTERFACE_INFO);
+	    numInterfaces = nBytesReturned / sizeof(INTERFACE_INFO);
 
-    for (int i = 0; i < numInterfaces; ++i)
-    {
-        Interface* interfacePtr = new Interface();
+	    for (int i = 0; i < numInterfaces; ++i)
+	    {
+		    Interface* interfacePtr = new Interface();
 
-        sockaddr_in* pAddress;
-        char str[INET_ADDRSTRLEN];
-        pAddress = (sockaddr_in*)&(InterfaceList[i].iiAddress);
-        const char* result = inet_ntop(AF_INET, &(pAddress->sin_addr), str, INET_ADDRSTRLEN);
-        if (result == NULL)
-        {
-            std::cout << "Failed to convert address to string. " << "Errno: " << std::strerror(errno) << std::endl;
-            continue;
-        }
-        interfacePtr->mInfoPtr->mAddr = str;
+		    sockaddr_in* pAddress;
+		    char str[INET_ADDRSTRLEN];
+		    pAddress = (sockaddr_in*)&(InterfaceList[i].iiAddress);
+		    const char* result = inet_ntop(AF_INET, &(pAddress->sin_addr), str, INET_ADDRSTRLEN);
+		    if (result == NULL)
+		    {
+			    std::cout << "Failed to convert address to string. " << "Errno: " << std::strerror(errno) << std::endl;
+			    continue;
+		    }
+		    interfacePtr->mInfoPtr->mAddr = str;
 
-        pAddress = (sockaddr_in*)&(InterfaceList[i].iiBroadcastAddress);
-        result = inet_ntop(AF_INET, &(pAddress->sin_addr), str, INET_ADDRSTRLEN);
-        if (result == NULL)
-        {
-            std::cout << "Failed to convert broadcast address to string. " << "Errno: " << std::strerror(errno) << std::endl;
-            continue;
-        }
-        interfacePtr->mInfoPtr->mBroadcastAddr = str;
+		    pAddress = (sockaddr_in*)&(InterfaceList[i].iiBroadcastAddress);
+		    result = inet_ntop(AF_INET, &(pAddress->sin_addr), str, INET_ADDRSTRLEN);
+		    if (result == NULL)
+		    {
+			    std::cout << "Failed to convert broadcast address to string. " << "Errno: " << std::strerror(errno) << std::endl;
+			    continue;
+		    }
+		    interfacePtr->mInfoPtr->mBroadcastAddr = str;
 
-        pAddress = (sockaddr_in*)&(InterfaceList[i].iiNetmask);
-        result = inet_ntop(AF_INET, &(pAddress->sin_addr), str, INET_ADDRSTRLEN);
-        if (result == NULL)
-        {
-            std::cout << "Failed to convert netmask to string. " << "Errno: " << std::strerror(errno) << std::endl;
-            continue;
-        }
-        interfacePtr->mInfoPtr->mNetmask = str;
+		    pAddress = (sockaddr_in*)&(InterfaceList[i].iiNetmask);
+		    result = inet_ntop(AF_INET, &(pAddress->sin_addr), str, INET_ADDRSTRLEN);
+		    if (result == NULL)
+		    {
+			    std::cout << "Failed to convert netmask to string. " << "Errno: " << std::strerror(errno) << std::endl;
+			    continue;
+		    }
+		    interfacePtr->mInfoPtr->mNetmask = str;
 
-        unsigned long flags = InterfaceList[i].iiFlags;
+		    unsigned long flags = InterfaceList[i].iiFlags;
 
-        interfacePtr->mInfoPtr->mIsUp = ((flags & IFF_UP) != 0);
-        interfacePtr->mInfoPtr->mIsLoopback = ((flags & IFF_LOOPBACK) != 0);
-        interfacePtr->mInfoPtr->mIsPointToPoint = ((flags & IFF_POINTTOPOINT) != 0);
-        interfacePtr->mInfoPtr->mHasBroadcast = ((flags & IFF_BROADCAST) != 0);
-        interfacePtr->mInfoPtr->mHasMulticast = ((flags & IFF_MULTICAST) != 0);
+		    interfacePtr->mInfoPtr->mIsUp = ((flags & IFF_UP) != 0);
+		    interfacePtr->mInfoPtr->mIsLoopback = ((flags & IFF_LOOPBACK) != 0);
+		    interfacePtr->mInfoPtr->mIsPointToPoint = ((flags & IFF_POINTTOPOINT) != 0);
+		    interfacePtr->mInfoPtr->mHasBroadcast = ((flags & IFF_BROADCAST) != 0);
+		    interfacePtr->mInfoPtr->mHasMulticast = ((flags & IFF_MULTICAST) != 0);
 
-        mInterfaces.push_back(interfacePtr);
-    }
+		    mInterfaces.push_back(interfacePtr);
+	    }
+    #endif
 #elif defined(__linux__)
-    struct ifaddrs* ifaddr = nullptr;
-    struct ifaddrs* ifa = nullptr;
+	struct ifaddrs* ifaddr = nullptr;
+	struct ifaddrs* ifa = nullptr;
 
-    if (getifaddrs(&ifaddr) == -1)
-    {
-        auto out = ut::log::error() << "Failed calling getifaddrs.";
-        out.AddNote() << "Errno: " << std::strerror(errno);
-    }
+	if (getifaddrs(&ifaddr) == -1)
+	{
+		auto out = ut::log::error() << "Failed calling getifaddrs.";
+		out.AddNote() << "Errno: " << std::strerror(errno);
+	}
 
-    // Walk through linked list
-    for (ifa = ifaddr; ifa != nullptr; ifa = ifa->ifa_next)
-    {
-        if (ifa->ifa_addr == nullptr)
-        {
-            continue;
-        }
+	// Walk through linked list
+	for (ifa = ifaddr; ifa != nullptr; ifa = ifa->ifa_next)
+	{
+		if (ifa->ifa_addr == nullptr)
+		{
+			continue;
+		}
 
-        int family = ifa->ifa_addr->sa_family;
+		int family = ifa->ifa_addr->sa_family;
 
-        // For an AF_INET* interface address, display the address */
-        if (family == AF_INET) // restrict ourselves to IPV4 for now || family == AF_INET6)
-        {
-            numInterfaces += 1;
+		// For an AF_INET* interface address, display the address */
+		if (family == AF_INET) // restrict ourselves to IPV4 for now || family == AF_INET6)
+		{
+			numInterfaces += 1;
 
-            Interface* interfacePtr = new Interface();
+			Interface* interfacePtr = new Interface();
 
-            unsigned int flags = ifa->ifa_flags;
-            interfacePtr->mInfoPtr->mIsUp = ((flags & IFF_UP) != 0);
-            interfacePtr->mInfoPtr->mHasBroadcast = ((flags & IFF_BROADCAST) != 0);
-            interfacePtr->mInfoPtr->mIsLoopback = ((flags & IFF_LOOPBACK) != 0);
-            interfacePtr->mInfoPtr->mIsPointToPoint = ((flags & IFF_POINTOPOINT) != 0);
-            interfacePtr->mInfoPtr->mHasMulticast = ((flags & IFF_MULTICAST) != 0);
+			unsigned int flags = ifa->ifa_flags;
+			interfacePtr->mInfoPtr->mIsUp = ((flags & IFF_UP) != 0);
+			interfacePtr->mInfoPtr->mHasBroadcast = ((flags & IFF_BROADCAST) != 0);
+			interfacePtr->mInfoPtr->mIsLoopback = ((flags & IFF_LOOPBACK) != 0);
+			interfacePtr->mInfoPtr->mIsPointToPoint = ((flags & IFF_POINTOPOINT) != 0);
+			interfacePtr->mInfoPtr->mHasMulticast = ((flags & IFF_MULTICAST) != 0);
 
-            GetNameInfo(ifa->ifa_addr, family, interfacePtr->mInfoPtr->mAddr);
-            GetNameInfo(ifa->ifa_netmask, family, interfacePtr->mInfoPtr->mNetmask);
-            GetNameInfo(ifa->ifa_broadaddr, family, interfacePtr->mInfoPtr->mBroadcastAddr);
+			GetNameInfo(ifa->ifa_addr, family, interfacePtr->mInfoPtr->mAddr);
+			GetNameInfo(ifa->ifa_netmask, family, interfacePtr->mInfoPtr->mNetmask);
+			GetNameInfo(ifa->ifa_broadaddr, family, interfacePtr->mInfoPtr->mBroadcastAddr);
 
-            mInterfaces.push_back(interfacePtr);
-        }
-    }
+			mInterfaces.push_back(interfacePtr);
+		}
+	}
 
-    freeifaddrs(ifaddr);
+	freeifaddrs(ifaddr);
 #endif
 }
 
