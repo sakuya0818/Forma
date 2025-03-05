@@ -39,13 +39,14 @@ set(ASSIMP_BUILD_OBJ_IMPORTER TRUE)
 set(ASSIMP_BUILD_FBX_IMPORTER TRUE)
 # 添加子目录 deps/assimp，构建 ASSIMP 库
 add_subdirectory(deps/assimp)
-# MSVC中，assimp 项目添加编译器选项 /EHsc
-if (MSVC)
-    target_compile_options(assimp PRIVATE /EHsc)
-endif()
 
 # 添加子目录 deps/ElaWidgetTools，构建 ElaWidgetTools 库
 add_subdirectory(deps/ElaWidgetTools)
+
+# 设置utils模块源文件
+set(DANDELION_UTILS_SOURCES
+    src/utils/logger.cpp
+)
 
 # 添加源文件
 set(PROJECT_SOURCES
@@ -53,6 +54,7 @@ set(PROJECT_SOURCES
         src/MainWindow.cpp
         src/MainWindow.h
         src/MainWindow.ui
+        ${DANDELION_UTILS_SOURCES}
 )
 
 # 定义可执行文件，源文件为 PROJECT_SOURCES
@@ -79,6 +81,7 @@ target_link_libraries(${PROJECT_NAME}
     assimp
     fmt::fmt
 )
+# 添加编译时定义（即预处理器宏）
 target_compile_definitions(${PROJECT_NAME}
     PRIVATE $<$<CONFIG:Debug>:DEBUG>
     PRIVATE SPDLOG_FMT_EXTERNAL
@@ -99,10 +102,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
-
-install(TARGETS ${PROJECT_NAME}
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(${PROJECT_NAME})

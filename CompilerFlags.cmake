@@ -25,6 +25,9 @@ if (MSVC)
     target_compile_options(${current_target}
         PRIVATE /W4 /WX /utf-8 /wd4996 /wd4458
     )
+    # 指定 C++ 异常处理程序try()catch的展开语义编译选项 /EHsc
+    target_compile_options(assimp PRIVATE /EHsc)
+    set_target_properties(${current_target} PROPERTIES COMPILE_FLAGS "/EHsc")
     # LNK4099 is missing pdb
     # We don't provide pdb files for static libraries, so disable this warning
     target_link_options(${current_target}
@@ -53,7 +56,7 @@ endif()
 # workaround for MINGW which will produce relocation error due to high image base
 # the specific reason is not known
 if (MINGW)
-    target_link_options(${current_target}
-        PRIVATE -Wl,--default-image-base-low
-    )
+#    target_link_options(${current_target}
+#        PRIVATE -Wl,--default-image-base-low
+#    )
 endif ()
