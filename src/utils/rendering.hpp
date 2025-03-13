@@ -26,7 +26,7 @@
  * 预览场景时，GLSL shader 中各输入变量的位置。相应的变量定义参考 resources/shaders
  * 中的 shader 代码。
  */
-constexpr unsigned int vertex_position = 0;
+constexpr unsigned int vertex_position_location = 0;
 constexpr unsigned int vertex_color_location    = 1;
 constexpr unsigned int vertex_normal_location   = 2;
 ///@}
