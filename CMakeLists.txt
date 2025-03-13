@@ -45,6 +45,8 @@ add_subdirectory(deps/ElaWidgetTools)
 
 # 设置utils模块源文件
 set(DANDELION_UTILS_SOURCES
+    src/utils/stb_image_wrapper.cpp
+    src/utils/kinetic_state.cpp
     src/utils/logger.cpp
 )
 
