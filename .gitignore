@@ -5,6 +5,8 @@ build/
 *.lo
 *.o
 *.obj
+# 排除模型目录中的.obj文件
+!resources/models/*.obj
 # Precompiled Headers
 *.gch
 *.pch
