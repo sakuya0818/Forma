@@ -105,6 +105,24 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
+# 目前仅处理 Windows 的情况，在构建结束后把 ElaWidgetTools 的 dll 和 lib 文件复制到主程序目录
+if(WIN32)
+    add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "$<TARGET_FILE:ElaWidgetTools>"
+            "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
+        COMMENT "正在复制 ElaWidgetTools DLL 到主目录"
+    )
+    add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "$<TARGET_LINKER_FILE:ElaWidgetTools>"
+            "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
+        COMMENT "正在复制 ElaWidgetTools LIB 到主目录"
+    )
+endif()
+
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(${PROJECT_NAME})
 endif()
