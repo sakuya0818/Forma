@@ -7,10 +7,6 @@
 
 class ElaContentDialog;
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
-
 class MainWindow : public ElaWindow
 {
     Q_OBJECT
@@ -23,7 +19,6 @@ public:
 	void initEdgeLayout();
 
 private:
-    Ui::MainWindow *ui;
 
     ElaContentDialog* _closeDialog{ nullptr };
 };
