@@ -46,12 +46,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::initWindow()
 {
-    setWindowIcon(QIcon(":/include/Image/Cirno.jpg"));
+	// 设置标题栏图标、标题，并初始化窗口大小
+    setWindowIcon(QIcon(":/Resource/Image/Forma.png"));
+	setWindowTitle("Forma");
     resize(1200, 740);
-    setUserInfoCardPixmap(QPixmap(":/Resource/Image/Cirno.jpg"));
-    setUserInfoCardTitle("Ela Tool");
-    setUserInfoCardSubTitle("Liniyous@gmail.com");
-    setWindowTitle("Forma");
+	// 设置信息卡图标、标题和副标题
+    setUserInfoCardPixmap(QPixmap(":/Resource/Image/Forma.png"));
+    setUserInfoCardTitle("Forma");
+    setUserInfoCardSubTitle("A cross-platform 3D graphics framework based on QT.");
 }
 
 void MainWindow::initEdgeLayout()
@@ -157,11 +159,6 @@ void MainWindow::initEdgeLayout()
     //logDockWidget->setWidget(new T_LogWidget(this));
     //this->addDockWidget(Qt::RightDockWidgetArea, logDockWidget);
     //resizeDocks({ logDockWidget }, { 200 }, Qt::Horizontal);
-
-    //ElaDockWidget* updateDockWidget = new ElaDockWidget("更新内容", this);
-    //updateDockWidget->setWidget(new T_UpdateWidget(this));
-    //this->addDockWidget(Qt::RightDockWidgetArea, updateDockWidget);
-    //resizeDocks({ updateDockWidget }, { 200 }, Qt::Horizontal);
 
 	//状态栏
 	ElaStatusBar* statusBar = new ElaStatusBar(this);
