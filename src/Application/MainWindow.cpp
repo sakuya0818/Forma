@@ -2,6 +2,7 @@
 
 #include <QDebug>
 #include <QHBoxLayout>
+#include <QButtonGroup>
 
 #include "ElaContentDialog.h"
 #include "ElaDockWidget.h"
@@ -95,57 +96,41 @@ void MainWindow::initEdgeLayout()
 	toolBar->setToolBarSpacing(3);
 	toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	toolBar->setIconSize(QSize(25, 25));
-	// toolBar->setFloatable(false);
-	// toolBar->setMovable(false);
+	toolBar->setFloatable(true);
 	ElaToolButton* toolButton1 = new ElaToolButton(this);
-	toolButton1->setElaIcon(ElaIconType::BadgeCheck);
+	toolButton1->setElaIcon(ElaIconType::ObjectGroup);
+	toolButton1->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+	toolButton1->setText("布局模式");
+	toolButton1->setCheckable(true);
+	toolButton1->setChecked(false);
 	toolBar->addWidget(toolButton1);
 	ElaToolButton* toolButton2 = new ElaToolButton(this);
-	toolButton2->setElaIcon(ElaIconType::ChartUser);
+	toolButton2->setElaIcon(ElaIconType::DiceD6);
+	toolButton2->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+	toolButton2->setText("建模模式");
+	toolButton2->setCheckable(true);
 	toolBar->addWidget(toolButton2);
-	toolBar->addSeparator();
 	ElaToolButton* toolButton3 = new ElaToolButton(this);
-	toolButton3->setElaIcon(ElaIconType::Bluetooth);
+	toolButton3->setElaIcon(ElaIconType::CameraViewfinder);
 	toolButton3->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	toolButton3->setText("Bluetooth");
+	toolButton3->setText("渲染模式");
+	toolButton3->setCheckable(true);
 	toolBar->addWidget(toolButton3);
 	ElaToolButton* toolButton4 = new ElaToolButton(this);
-	toolButton4->setElaIcon(ElaIconType::BringFront);
+	toolButton4->setElaIcon(ElaIconType::DiceD10);
+	toolButton4->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+	toolButton4->setText("物理模拟模式");
+	toolButton4->setCheckable(true);
 	toolBar->addWidget(toolButton4);
 	toolBar->addSeparator();
-	ElaToolButton* toolButton5 = new ElaToolButton(this);
-	toolButton5->setElaIcon(ElaIconType::ChartSimple);
-	toolBar->addWidget(toolButton5);
-	ElaToolButton* toolButton6 = new ElaToolButton(this);
-	toolButton6->setElaIcon(ElaIconType::FaceClouds);
-	toolBar->addWidget(toolButton6);
-	ElaToolButton* toolButton8 = new ElaToolButton(this);
-	toolButton8->setElaIcon(ElaIconType::Aperture);
-	toolBar->addWidget(toolButton8);
-	ElaToolButton* toolButton9 = new ElaToolButton(this);
-	toolButton9->setElaIcon(ElaIconType::ChartMixed);
-	toolBar->addWidget(toolButton9);
-	ElaToolButton* toolButton10 = new ElaToolButton(this);
-	toolButton10->setElaIcon(ElaIconType::Coins);
-	toolBar->addWidget(toolButton10);
-	ElaToolButton* toolButton11 = new ElaToolButton(this);
-	toolButton11->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	toolButton11->setElaIcon(ElaIconType::AlarmPlus);
-	toolButton11->setText("AlarmPlus");
-	toolBar->addWidget(toolButton11);
-	ElaToolButton* toolButton12 = new ElaToolButton(this);
-	toolButton12->setElaIcon(ElaIconType::Crown);
-	toolBar->addWidget(toolButton12);
-	QAction* test = new QAction(this);
-	test->setMenu(new QMenu(this));
 
-	ElaProgressBar* progressBar = new ElaProgressBar(this);
-	progressBar->setMinimum(0);
-	progressBar->setMaximum(0);
-	progressBar->setFixedWidth(350);
-	toolBar->addWidget(progressBar);
-
+	QButtonGroup* buttonGroup = new QButtonGroup(this);
+	buttonGroup->setExclusive(true);
 	this->addToolBar(Qt::TopToolBarArea, toolBar);
+	buttonGroup->addButton(toolButton1);
+	buttonGroup->addButton(toolButton2);
+	buttonGroup->addButton(toolButton3);
+	buttonGroup->addButton(toolButton4);
 
 	////停靠窗口
     //ElaDockWidget* logDockWidget = new ElaDockWidget("日志信息", this);
