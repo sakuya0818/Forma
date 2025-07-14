@@ -66,35 +66,28 @@ void MainWindow::initEdgeLayout()
     customLayout->setContentsMargins(0, 0, 0, 0);
     customLayout->addWidget(menuBar);
     customLayout->addStretch();
-    // this->setMenuBar(menuBar);
     this->setCustomWidget(ElaAppBarType::MiddleArea, customWidget);
     this->setCustomWidgetMaximumWidth(500);
 
-    menuBar->addElaIconAction(ElaIconType::AtomSimple, "动作菜单");
-    ElaMenu* iconMenu = menuBar->addMenu(ElaIconType::Aperture, "图标菜单");
-    iconMenu->setMenuItemHeight(27);
-    iconMenu->addElaIconAction(ElaIconType::BoxCheck, "排序方式", QKeySequence::SelectAll);
-    iconMenu->addElaIconAction(ElaIconType::Copy, "复制");
-    iconMenu->addElaIconAction(ElaIconType::MagnifyingGlassPlus, "显示设置");
-    iconMenu->addSeparator();
-    iconMenu->addElaIconAction(ElaIconType::ArrowRotateRight, "刷新");
-    iconMenu->addElaIconAction(ElaIconType::ArrowRotateLeft, "撤销");
+    menuBar->addElaIconAction(ElaIconType::Aperture, "菜单");
+    ElaMenu* fileMenu = menuBar->addMenu(ElaIconType::File, "文件");
+	fileMenu->setMenuItemHeight(27);
+	fileMenu->addElaIconAction(ElaIconType::FileImport, "导入文件", QKeySequence::Open);
     menuBar->addSeparator();
-    ElaMenu* shortCutMenu = new ElaMenu("快捷菜单(&A)", this);
-    shortCutMenu->setMenuItemHeight(27);
-    shortCutMenu->addElaIconAction(ElaIconType::BoxCheck, "排序方式", QKeySequence::Find);
-    shortCutMenu->addElaIconAction(ElaIconType::Copy, "复制");
-    shortCutMenu->addElaIconAction(ElaIconType::MagnifyingGlassPlus, "显示设置");
-    shortCutMenu->addSeparator();
-    shortCutMenu->addElaIconAction(ElaIconType::ArrowRotateRight, "刷新");
-    shortCutMenu->addElaIconAction(ElaIconType::ArrowRotateLeft, "撤销");
-    menuBar->addMenu(shortCutMenu);
+    ElaMenu* debugMenu = menuBar->addMenu(ElaIconType::AtomSimple, "调试");
+	debugMenu->setMenuItemHeight(27);
+	ElaMenu* globalLogMenu = debugMenu->addMenu(ElaIconType::BringFront, "全局日志等级");
+	debugMenu->addMenu(globalLogMenu);
+	globalLogMenu->addElaIconAction(ElaIconType::BrakeWarning, "Warn");
+	globalLogMenu->addElaIconAction(ElaIconType::Info, "Info");
+	globalLogMenu->addElaIconAction(ElaIconType::Bug, "Debug");
+	globalLogMenu->addElaIconAction(ElaIconType::NfcSymbol, "Trace");
+	debugMenu->addElaIconAction(ElaIconType::List, "调试选项");
+	ElaMenu* helpMenu = menuBar->addMenu(ElaIconType::BadgeCheck, "帮助");
+	helpMenu->setMenuItemHeight(27);
+	helpMenu->addElaIconAction(ElaIconType::BoxCheck, "用法");
+	helpMenu->addElaIconAction(ElaIconType::User, "关于我们...");
 
-    menuBar->addMenu("样例菜单(&B)")->addElaIconAction(ElaIconType::ArrowRotateRight, "样例选项");
-    menuBar->addMenu("样例菜单(&C)")->addElaIconAction(ElaIconType::ArrowRotateRight, "样例选项");
-    menuBar->addMenu("样例菜单(&E)")->addElaIconAction(ElaIconType::ArrowRotateRight, "样例选项");
-    menuBar->addMenu("样例菜单(&F)")->addElaIconAction(ElaIconType::ArrowRotateRight, "样例选项");
-	menuBar->addMenu("样例菜单(&G)")->addElaIconAction(ElaIconType::ArrowRotateRight, "样例选项");
 
 	//工具栏
 	ElaToolBar* toolBar = new ElaToolBar("工具栏", this);
