@@ -26,9 +26,6 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 # 根据查找到的Qt版本设置相应的Qt组件
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-# 添加子目录 deps/fmt，构建 fmt 库
-add_subdirectory(deps/fmt)
-
 # 配置 ASSIMP 库的构建选项
 # 禁用默认构建所有导入器
 set(ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT OFF CACHE BOOL "" FORCE)

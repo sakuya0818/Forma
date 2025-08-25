@@ -64,7 +64,6 @@ target_link_libraries(${TARGET_EXE_NAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     ElaWidgetTools
     assimp
-    fmt::fmt
 )
 
 if (${QT_VERSION} VERSION_LESS 6.1.0)

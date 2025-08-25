@@ -279,6 +279,12 @@ bool ElaWindow::getIsNavigationBarEnable() const
     return d_ptr->_isNavigationEnable;
 }
 
+void ElaWindow::setNavigationDisplayMode(ElaNavigationType::NavigationDisplayMode displayMode)
+{
+    Q_D(ElaWindow);
+    d->_navigationBar->setDisplayMode(displayMode);
+}
+
 void ElaWindow::setUserInfoCardVisible(bool isVisible)
 {
     Q_D(ElaWindow);

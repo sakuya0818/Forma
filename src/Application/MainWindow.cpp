@@ -55,6 +55,7 @@ void MainWindow::initWindow()
     setUserInfoCardPixmap(QPixmap(":/Resource/Image/Forma.png"));
     setUserInfoCardTitle("Forma");
     setUserInfoCardSubTitle("A cross-platform 3D graphics framework based on QT.");
+	setNavigationDisplayMode(ElaNavigationType::Compact);
 }
 
 void MainWindow::initEdgeLayout()

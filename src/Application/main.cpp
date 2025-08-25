@@ -1,12 +1,9 @@
 #include <QApplication>
 #include <QSurfaceFormat>
 #include <QOpenGLContext>
-#include <spdlog/spdlog.h>
-#include <fmt/chrono.h>
 
 #include "MainWindow.h"
 #include "ElaApplication.h"
-//#include "utils/logger.h"
 
 int main(int argc, char *argv[])
 {
@@ -23,17 +20,6 @@ int main(int argc, char *argv[])
 #endif
 	QApplication a(argc, argv);
 	eApp->init();
-
-	spdlog::set_pattern("[%n] [%^%l%$] %v");
-#ifdef DEBUG
-	spdlog::set_level(spdlog::level::debug);
-#else
-	spdlog::set_level(spdlog::level::info);
-#endif
-	//spdlog::set_default_logger(get_logger("Default"));
-
-	std::tm now = fmt::localtime(std::time(nullptr));
-	spdlog::info("Dandelion 3D, started at {:%Y-%m-%d %H:%M:%S%z}", now);
 
 	// 设置OpenGL版本
 	QSurfaceFormat fmt;
