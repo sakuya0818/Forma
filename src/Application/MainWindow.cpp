@@ -51,11 +51,10 @@ void MainWindow::initWindow()
     setWindowIcon(QIcon(":/Resource/Image/Forma.png"));
 	setWindowTitle("Forma");
     resize(1200, 740);
-	// 设置信息卡图标、标题和副标题
+	// 设置信息卡图标、标题和副标题，导航栏为紧凑模式
     setUserInfoCardPixmap(QPixmap(":/Resource/Image/Forma.png"));
     setUserInfoCardTitle("Forma");
     setUserInfoCardSubTitle("A cross-platform 3D graphics framework based on QT.");
-	// 初始化设置导航栏为紧凑模式
 	setNavigationDisplayMode(ElaNavigationType::Compact);
 }
 
