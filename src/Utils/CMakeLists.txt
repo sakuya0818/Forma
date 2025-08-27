@@ -11,6 +11,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
+# 查找Qt库，要求至少有Core组件
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
+# 根据查找到的Qt版本设置相应的Qt组件
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
+
 # 设置为动态库
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_library(${PROJECT_NAME} SHARED)
