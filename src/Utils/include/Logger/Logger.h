@@ -7,7 +7,7 @@
 
 
 #define LOG_TRACE(level, msg) \
-    Logger::instance()->writeDetailed(__FUNCTION__, __FILE__, __LINE__, msg, level)
+    Logger::getInstance()->writeDetailed(__FUNCTION__, __FILE__, __LINE__, msg, level)
 
 #define LOG_DEBUG(msg) LOG_TRACE(LogLevel::Debug, msg)
 #define LOG_INFO(msg)  LOG_TRACE(LogLevel::Info, msg)
@@ -24,7 +24,7 @@ enum class LogLevel {
 class UTILS_EXPORT Logger : public QObject {
 	Q_OBJECT
 public:
-	static Logger* instance();
+	static Logger* getInstance();
 
 	void write(const QString& message, LogLevel level = LogLevel::Info);
 	void writeDetailed(const QString& func, const QString& file, int line, const QString& message, LogLevel level);

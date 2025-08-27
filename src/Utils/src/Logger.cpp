@@ -1,11 +1,11 @@
-#include "Logger.h"
+#include "Logger/Logger.h"
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/daily_file_sink.h>
 #include <QCoreApplication>
 #include <QDir>
 
-Logger* Logger::instance() {
+Logger* Logger::getInstance() {
 	static Logger logger;
 	return &logger;
 }

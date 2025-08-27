@@ -31,7 +31,7 @@ target_include_directories(${PROJECT_NAME}
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/deps/spdlog
+        ${CMAKE_CURRENT_SOURCE_DIR}/deps
 )
 
 # 链接spdlog，仅限内部使用
