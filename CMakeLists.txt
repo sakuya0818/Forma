@@ -47,6 +47,9 @@ add_subdirectory(deps/assimp)
 # 添加子项目 ElaWidgetTools
 add_subdirectory(src/ElaWidgetTools)
 
+# 添加子项目 Utils
+add_subdirectory(src/Utils)
+
 # 添加子项目 Application
 add_subdirectory(src/Application)
 
