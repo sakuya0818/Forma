@@ -36,7 +36,6 @@ target_include_directories(${PROJECT_NAME}
 
 # 链接spdlog，仅限内部使用
 target_link_libraries(${PROJECT_NAME}
-    PRIVATE spdlog
     PUBLIC Qt${QT_VERSION_MAJOR}::Core
 )
 
