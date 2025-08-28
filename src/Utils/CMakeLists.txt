@@ -18,11 +18,14 @@ else ()
     add_library(${PROJECT_NAME} SHARED)
 endif ()
 
+file(GLOB_RECURSE HEADERS include/*.h)
+file(GLOB_RECURSE SOURCES src/*.cpp)
+
 # 添加源文件
 target_sources(${PROJECT_NAME}
     PRIVATE
-        src/Logger.cpp
-        include/Logger/Logger.h
+        ${SOURCES}
+        ${HEADERS}
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE UTILS_LIBRARY)
