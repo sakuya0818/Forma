@@ -28,6 +28,7 @@ target_sources(${PROJECT_NAME}
         ${HEADERS}
 )
 
+# 定义导出库的宏
 target_compile_definitions(${PROJECT_NAME} PRIVATE UTILS_LIBRARY)
 
 # 添加头文件路径

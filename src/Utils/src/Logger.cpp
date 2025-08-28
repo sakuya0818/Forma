@@ -5,6 +5,7 @@
 #include <QCoreApplication>
 #include <QDir>
 
+// 懒汉式单例模式
 Logger* Logger::getInstance() {
 	static Logger logger;
 	return &logger;
