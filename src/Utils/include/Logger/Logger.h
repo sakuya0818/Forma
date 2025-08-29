@@ -7,30 +7,30 @@
 #include <QString>
 
 /**************************************************************************
- * Ä£¿éÃû³Æ£ºspdlogÈÕÖ¾·â×°Ä£¿é                                           *
+ * æ¨¡å—åç§°ï¼šspdlogæ—¥å¿—å°è£…æ¨¡å—                                           *
  *                                                                        *
- * ¹¦ÄÜÃèÊö£º                                                             *
- *   - »ùÓÚ spdlog µÄ¶àÏß³ÌÄ£Ê½£¬È·±£Ïß³Ì°²È«                             *
- *   - Í¬Ê±Ö§³ÖÁ½ÖÖÈÕÖ¾Êä³öÐÎÊ½£ºÖÕ¶ËÈÕÖ¾ÓëÃ¿ÈÕÈÕÖ¾ÎÄ¼þ                   *
+ * åŠŸèƒ½æè¿°ï¼š                                                             *
+ *   - åŸºäºŽ spdlog çš„å¤šçº¿ç¨‹æ¨¡å¼ï¼Œç¡®ä¿çº¿ç¨‹å®‰å…¨                             *
+ *   - åŒæ—¶æ”¯æŒä¸¤ç§æ—¥å¿—è¾“å‡ºå½¢å¼ï¼šç»ˆç«¯æ—¥å¿—ä¸Žæ¯æ—¥æ—¥å¿—æ–‡ä»¶                   *
  *                                                                        *
- * Ê¹ÓÃËµÃ÷£º                                                             *
- *   - µ÷ÓÃ InitLogger() ³õÊ¼»¯ÈÕÖ¾ÏµÍ³                                   *
- *   - ¿É¸ù¾ÝÈÕÖ¾ÀàÐÍÊä³ö²»Í¬ÑÕÉ«£¨ÖÕ¶Ë£©                                 *
- *   - Ã¿ÈÕ×Ô¶¯Éú³ÉÐÂÈÕÖ¾ÎÄ¼þ£¬×Ô¶¯ÇåÀí³¬¹ý30·ÝµÄ¾ÉÈÕÖ¾                   *
- *   - Ä¬ÈÏÈÕÖ¾Â·¾¶£ºÖ´ÐÐÎÄ¼þÄ¿Â¼ÏÂ /DailyLogs/daily.txt                  *
+ * ä½¿ç”¨è¯´æ˜Žï¼š                                                             *
+ *   - è°ƒç”¨ InitLogger() åˆå§‹åŒ–æ—¥å¿—ç³»ç»Ÿ                                   *
+ *   - å¯æ ¹æ®æ—¥å¿—ç±»åž‹è¾“å‡ºä¸åŒé¢œè‰²ï¼ˆç»ˆç«¯ï¼‰                                 *
+ *   - æ¯æ—¥è‡ªåŠ¨ç”Ÿæˆæ–°æ—¥å¿—æ–‡ä»¶ï¼Œè‡ªåŠ¨æ¸…ç†è¶…è¿‡30ä»½çš„æ—§æ—¥å¿—                   *
+ *   - é»˜è®¤æ—¥å¿—è·¯å¾„ï¼šæ‰§è¡Œæ–‡ä»¶ç›®å½•ä¸‹ /DailyLogs/daily.txt                  *
  *                                                                        *
- * ÈÕÖ¾ÀàÐÍÖ§³Ö£º                                                         *
- *   - debug¡¢info¡¢warn¡¢error µÈ·ÖÀà                                    *
- *   - Ö§³ÖÐÅºÅ²Ûµ÷ÓÃ·½Ê½                                                 *
+ * æ—¥å¿—ç±»åž‹æ”¯æŒï¼š                                                         *
+ *   - debugã€infoã€warnã€error ç­‰åˆ†ç±»                                    *
+ *   - æ”¯æŒä¿¡å·æ§½è°ƒç”¨æ–¹å¼                                                 *
  **************************************************************************/
 
-#define LOG_TRACE(level, msg) \
-    Logger::getInstance()->writeDetailed(__FUNCTION__, __FILE__, __LINE__, msg, level)
+#define OS_TraceLogInfo(level, msg) \
+    Logger::getInstance()->writeLog(__FUNCTION__, __FILE__, __LINE__, msg, level)
 
-#define LOG_DEBUG(msg) LOG_TRACE(LogLevel::Debug, msg)
-#define LOG_INFO(msg)  LOG_TRACE(LogLevel::Info, msg)
-#define LOG_WARN(msg)  LOG_TRACE(LogLevel::Warn, msg)
-#define LOG_ERROR(msg) LOG_TRACE(LogLevel::Error, msg)
+#define OS_DebugLog(msg) OS_TraceLogInfo(LogLevel::Debug, msg)
+#define OS_InfoLog(msg)  OS_TraceLogInfo(LogLevel::Info, msg)
+#define OS_WarnLog(msg)  OS_TraceLogInfo(LogLevel::Warn, msg)
+#define OS_ErrorLog(msg) OS_TraceLogInfo(LogLevel::Error, msg)
 
 enum class LogLevel {
 	Debug = 0,
@@ -45,10 +45,10 @@ public:
 	static Logger* getInstance();
 
 	void write(const QString& message, LogLevel level = LogLevel::Info);
-	void writeDetailed(const QString& func, const QString& file, int line, const QString& message, LogLevel level);
+	void writeLog(const QString& func, const QString& file, int line, const QString& message, LogLevel level);
 
 signals:
-	void logWritten(LogLevel level, QString message);
+	void sigShowLogInfo(LogLevel level, QString message);
 
 private:
 	explicit Logger(QObject* parent = nullptr);

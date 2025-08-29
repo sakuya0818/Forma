@@ -63,6 +63,7 @@ target_include_directories(${TARGET_EXE_NAME} PUBLIC
 target_link_libraries(${TARGET_EXE_NAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     ElaWidgetTools
+    Utils
     assimp
 )
 

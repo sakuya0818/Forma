@@ -2,6 +2,7 @@
 #include <QSurfaceFormat>
 #include <QOpenGLContext>
 
+#include "Logger/Logger.h"
 #include "MainWindow.h"
 #include "ElaApplication.h"
 
@@ -26,14 +27,14 @@ int main(int argc, char *argv[])
 	fmt.setDepthBufferSize(24);
 	if (QOpenGLContext::openGLModuleType() == QOpenGLContext::LibGL) {
 		// 桌面 OpenGL（Core Profile）
-		qDebug("Requesting 3.3 core context");
+		OS_TraceLogInfo(LogLevel::Info, "Requesting 3.3 core context");
 		fmt.setVersion(3, 3);
 		fmt.setProfile(QSurfaceFormat::CoreProfile);
 		fmt.setOption(QSurfaceFormat::DeprecatedFunctions, false); // 禁用旧函数
 	}
 	else {
 		// OpenGL ES
-		qDebug("Requesting 3.0 context");
+		OS_TraceLogInfo(LogLevel::Info, "Requesting 3.0 context");
 		fmt.setVersion(3, 0);
 		fmt.setRenderableType(QSurfaceFormat::OpenGLES); // 显式声明为 ES
 	}
