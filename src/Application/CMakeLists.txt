@@ -92,6 +92,7 @@ if (WIN32)
     add_custom_command(TARGET ${TARGET_EXE_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
             $<TARGET_FILE:ElaWidgetTools>
+            $<TARGET_FILE:Utils>
             $<TARGET_FILE_DIR:${TARGET_EXE_NAME}>
     )
     include(GNUInstallDirs)

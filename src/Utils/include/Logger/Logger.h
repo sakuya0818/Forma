@@ -25,7 +25,7 @@
  **************************************************************************/
 
 #define OS_TraceLogInfo(level, msg) \
-    Logger::getInstance()->writeLog(__FUNCTION__, __FILE__, __LINE__, msg, level)
+    Logger::getInstance().writeLog(__FUNCTION__, __FILE__, __LINE__, msg, level)
 
 #define OS_DebugLog(msg) OS_TraceLogInfo(LogLevel::Debug, msg)
 #define OS_InfoLog(msg)  OS_TraceLogInfo(LogLevel::Info, msg)
@@ -42,10 +42,12 @@ enum class LogLevel {
 class UTILS_EXPORT Logger : public QObject {
 	Q_OBJECT
 public:
-	static Logger* getInstance();
+	static Logger& getInstance();
 
 	void write(const QString& message, LogLevel level = LogLevel::Info);
 	void writeLog(const QString& func, const QString& file, int line, const QString& message, LogLevel level);
+
+	void setLevel(LogLevel level);
 
 signals:
 	void sigShowLogInfo(LogLevel level, QString message);

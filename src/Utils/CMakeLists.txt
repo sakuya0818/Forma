@@ -18,8 +18,8 @@ else ()
     add_library(${PROJECT_NAME} SHARED)
 endif ()
 
-file(GLOB_RECURSE HEADERS include/*.h)
-file(GLOB_RECURSE SOURCES src/*.cpp)
+file(GLOB_RECURSE HEADERS CONFIGURE_DEPENDS include/*.h)
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.cpp)
 
 # 添加源文件
 target_sources(${PROJECT_NAME}
@@ -39,7 +39,7 @@ target_include_directories(${PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/deps
 )
 
-# 链接spdlog，仅限内部使用
+# spdlog 是 header-only，无需链接
 target_link_libraries(${PROJECT_NAME}
     PUBLIC Qt${QT_VERSION_MAJOR}::Core
 )
