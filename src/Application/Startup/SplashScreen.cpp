@@ -26,7 +26,7 @@ SplashScreen* SplashScreen::getInstance()
 {
 	if (nullptr == m_instance)
 	{
-		m_instance = new SplashScreen(QPixmap(":/Resource/Image/Forma.png"));
+		m_instance = new SplashScreen(QPixmap(":/Resource/Image/miku.png"));
 	}
 
 	return m_instance;
@@ -57,14 +57,14 @@ void SplashScreen::paintEvent(QPaintEvent* event)
 	// 绘制logo和logo文字
 	if (!m_pixLogo.isNull())
 	{
-		painter.drawPixmap(OFFSET_VALUE, (this->height() - m_pixLogo.height()) / 2, m_pixLogo);
+		painter.drawPixmap(160, (this->height() - m_pixLogo.height()) / 2, m_pixLogo);
 
 		font.setPixelSize(35);
 		font.setBold(true);
 		painter.setFont(font);
 		painterPen.setColor(Qt::white);
 		painter.setPen(painterPen);
-		painter.drawText(0, this->height() / 2 - OFFSET_VALUE / 2, this->width(), OFFSET_VALUE, Qt::AlignCenter, m_textLogo);
+		painter.drawText(45, this->height() / 2 - OFFSET_VALUE / 2, this->width(), OFFSET_VALUE, Qt::AlignCenter, m_textLogo);
 	}
 
 	// 绘制消息文本
@@ -72,7 +72,7 @@ void SplashScreen::paintEvent(QPaintEvent* event)
 		font.setPixelSize(16);
 		font.setBold(true);
 		painter.setFont(font);
-		painterPen.setColor(Qt::blue);
+		painterPen.setColor(Qt::white);
 		painter.setPen(painterPen);
 		painter.drawText(0, this->height() - OFFSET_VALUE * 2, this->width(), OFFSET_VALUE, Qt::AlignCenter, m_message);
 	}

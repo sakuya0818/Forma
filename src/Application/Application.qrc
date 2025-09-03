@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>Resource/Image/Forma.png</file>
+        <file>Resource/Image/miku.png</file>
+        <file>Resource/Image/Forma1024.png</file>
     </qresource>
 </RCC>
