@@ -13,11 +13,11 @@ public:
 	}
 
 signals:
-	void messagePosted(const QString& msg); // ÊÂ¼ş£º·¢²¼ÏûÏ¢
+	void messagePosted(const QString& msg); // äº‹ä»¶ï¼šå‘å¸ƒæ¶ˆæ¯
 
 private:
 	EventBus() {}
-	Q_DISABLE_COPY(EventBus) // ½ûÖ¹¿½±´
+	Q_DISABLE_COPY(EventBus) // ç¦æ­¢æ‹·è´
 };
 
 #endif // EVENTBUS_H

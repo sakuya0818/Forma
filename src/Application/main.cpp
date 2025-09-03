@@ -3,7 +3,7 @@
 #include <QOpenGLContext>
 
 #include "Logger/Logger.h"
-#include "MainWindow.h"
+#include "Startup/MainObject.h"
 #include "ElaApplication.h"
 
 int main(int argc, char *argv[])
@@ -40,8 +40,9 @@ int main(int argc, char *argv[])
 	}
 	QSurfaceFormat::setDefaultFormat(fmt);
 
-    MainWindow w;
-    w.show();
+	// 显示启动画面
+	MainObject mainObject;
+	mainObject.setInit();
 
     return a.exec();
 }
