@@ -19,6 +19,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 FILE(GLOB ORIGIN *.cpp *.h)
 FILE(GLOB STARTUP Startup/*.h Startup/*.cpp)
+FILE(GLOB RENDER Render/*.h Render/*.cpp)
 
 source_group(Startup FILES ${STARTUP})
 
