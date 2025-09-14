@@ -47,7 +47,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::initWindow()
 {
-	// 设置标题栏图标、标题，并初始化窗口大小
+	// 设置标题栏图标、标题，初始化窗口大小
     setWindowIcon(QIcon(":/Resource/Image/Forma.png"));
 	setWindowTitle("Forma");
     resize(1200, 740);
